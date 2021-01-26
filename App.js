@@ -19,6 +19,7 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Video from 'react-native-video';
 import {Picker} from '@react-native-picker/picker';
+import data from './data.json';
 
 const App: () => React$Node = () => {
   const [selectedValue, setSelectedValue] = useState(
@@ -39,28 +40,14 @@ const App: () => React$Node = () => {
               onValueChange={(itemValue, itemIndex) =>
                 setSelectedValue(itemValue)
               }>
-              <Picker.Item
-                label="Big Buck Bunny"
-                value="https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"
-              />
-              <Picker.Item
-                label="HD World"
-                value="https://multiplatform-f.akamaihd.net/i/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"
-              />
-              <Picker.Item
-                label="CCTV"
-                value="https://multiplatform-f.akamaihd.net/i/multi/april11/cctv/cctv_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"
-              />
-              <Picker.Item
-                label="Sintel"
-                value="https://multiplatform-f.akamaihd.net/i/multi/april11/sintel/sintel-hd_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,.mp4.csmil/master.m3u8"
-              />
-              <Picker.Item
-                label="Eight"
-                value="https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8"
-              />
+              {data.streams.map((stream) => (
+                <Picker.Item
+                  key={stream.id}
+                  label={stream.name}
+                  value={stream.source}
+                />
+              ))}
             </Picker>
-
             <Video
               key={selectedValue}
               source={{
